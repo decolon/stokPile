@@ -1,0 +1,20 @@
+h2 Required
+hr
+form(action='/user/home', method='post')
+	label(for='firstName')First Name
+	input(type='text', name='firstName')
+	br
+	label(for='lastName') Last Name
+	input(type='text', name='lastName')
+	br
+	label(for='email') Email
+	input(type='text', ng-model='emailValue')
+	br
+	label(for='password') Password
+	input(type='password', name='password')
+	br
+	label(for='passwordConf') Password Confirmation
+	input(type='password', name='passwordConf')
+	br
+	input(type='submit')
+	br

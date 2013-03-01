@@ -1,0 +1,12 @@
+extends layout
+
+block body
+  div(ng-controller='AppCtrl')
+    img(src='./img/logo.gif', alt='Stockpile Logo')
+    h1 Stockpile
+    h2 Show your support
+    a(href='welcome') Welcome
+    a(href='signup') Signup
+    div(ng-view)
+
+
