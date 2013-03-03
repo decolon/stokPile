@@ -9,3 +9,19 @@ angular.module('myApp.services', []).
   value('version', '0.1');
 
 
+angular.module('myApp.services', [])
+	.service('emailService', function (){
+		var text = 'test';
+		return{
+			getEmail:function (){
+				return text;
+			},
+			setEmail:function(data){
+				text = data;
+			}
+
+		};
+	});
+
+
+
