@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<testsuites>
+  <testsuite name="Chrome 25.0 (Mac)" package="" timestamp="2013-03-05T01:49:48" id="0" hostname="rescomp-12-240729.stanford.edu" tests="3" errors="0" failures="1" time="0.009">
+    <properties>
+      <property name="browser.fullName" value="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.152 Safari/537.22"/>
+    </properties>
+    <testcase name="should call emailService.setEmail" time="0.005" classname="Chrome 25.0 (Mac).Public Pages Controllers WelcomeCtl"/>
+    <testcase name="should call emailService.getEmail" time="0.003" classname="Chrome 25.0 (Mac).Public Pages Controllers SignupCtl">
+      <failure type="">Expected spy emailService.getEmail to have been called.
+Error: Expected spy emailService.getEmail to have been called.
+    at null.&lt;anonymous&gt; (/Users/decolon/Sites/node/stokpile/test/unit/controllersSpec.js:58:41)
+</failure>
+    </testcase>
+    <testcase name="should not not have START VALUE in emailValue" time="0.001" classname="Chrome 25.0 (Mac).Public Pages Controllers SignupCtl"/>
+    <system-out><![CDATA[
+]]></system-out>
+    <system-err/>
+  </testsuite>
+</testsuites>
