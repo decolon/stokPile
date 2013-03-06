@@ -21,26 +21,7 @@ describe('Public Pages Controllers', function(){
 		$scope = $injector.get('$rootScope');
 		$controller = $injector.get('$controller');
 	}));
-
-	//Tests for WelcomeCtl
-	//----------------------------------------------------------------------------
 	
-	describe('WelcomeCtl', function(){
-		var ctrl, params;
-		beforeEach(function(){
-			params = {
-				$scope: $scope,
-				emailService: jasmine.createSpyObj('emailService', ['setEmail'])
-			};
-			ctrl = $controller('WelcomeCtl', params);
-		});
-
-		it('should call emailService.setEmail', function(){
-			$scope.save();
-			expect(params.emailService.setEmail).toHaveBeenCalled();
-		});
-	});
-
 	//Tests for SignupCtl
 	//---------------------------------------------------------------------------
 

@@ -5,16 +5,6 @@
 function AppCtrl($scope, emailService) {
 }
 
-//WelcomeCtl
-//----------------------------------------------------------------------------
-
-function WelcomeCtl($scope, emailService) {
-	$scope.save = function(){
-		emailService.setEmail($scope.email);
-	}
-}
-WelcomeCtl.$inject = ['$scope', 'emailService'];
-
 //SignupCtl
 //----------------------------------------------------------------------------
 
