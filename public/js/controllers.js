@@ -21,3 +21,11 @@ function SigninCtl($scope){
 }
 SigninCtl.$inject = ['$scope'];
 
+//UserCtl
+//-------------------------------------------------------------------------
+
+function UserCtl($scope){
+	
+}
+UserCtl.$inject = ['$scope'];
+

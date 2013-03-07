@@ -6,6 +6,7 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.when('/signin', {templateUrl: 'partials/signin', controller: SigninCtl});
     $routeProvider.when('/signup', {templateUrl: 'partials/signup', controller: SignupCtl});
+    $routeProvider.when('/user', {templateUrl: 'partials/user', controller: UserCtl});
     $routeProvider.otherwise({redirectTo: '/signup'});
     $locationProvider.html5Mode(true);
   }]);
