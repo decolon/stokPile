@@ -1,0 +1,14 @@
+extends layout
+
+block body
+	h3 LOGGED IN
+	img(src='./img/logo.gif', alt='Stockpile Logo')
+	ul
+		li
+			a(href='user') Home
+		li
+			a(href='invest') Invest
+		li
+			a(href='sell') Sell
+	hr
+	div(ng-view)

@@ -1,0 +1,9 @@
+div(ng-controller="UserCtl")
+	h3 User Home
+
+	ul
+		li
+			button(ng-click="toSummary()") Summary
+		li
+			button(ng-click="toInvestments()") Investments
+	div(ng-include src="getPage()")

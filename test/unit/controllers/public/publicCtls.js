@@ -1,7 +1,4 @@
-//Testing Stokpile controllers
-//
-//controllers located at public/js/controllers.js
-//
+
 
 //TESTING: Public Pages
 //----------------------------------------------------------------------
@@ -30,18 +27,14 @@ describe('Public Pages Controllers', function(){
 		beforeEach(function(){
 			params = {
 				$scope: $scope,
-				emailService: jasmine.createSpyObj('emailService', ['getEmail'])
 			};
 			ctrl = $controller('SignupCtl', params);
 		});
 
-		it('should call emailService.getEmail', function(){
-			expect(params.emailService.getEmail).toHaveBeenCalled();
+		it('shoud have something', function(){
+			
 		});
 
-		it('should not not have START VALUE in emailValue', function(){
-			expect($scope.emailValue).not.toBe('START VALUE');
-		});
 	});
 
 	//Tests for SigninCtl
@@ -60,4 +53,6 @@ describe('Public Pages Controllers', function(){
 			
 		});
 	});
+
 });
+

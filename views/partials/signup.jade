@@ -1,5 +1,5 @@
 h3 Sign Up
-form(action='/user/home', method='post')
+form(action='/login', method='get')
 	label(for='firstName')First Name
 	input(type='text', name='firstName')
 	br
@@ -15,5 +15,5 @@ form(action='/user/home', method='post')
 	label(for='passwordConf') Password Confirmation
 	input(type='password', name='passwordConf')
 	br
-	input(type='submit')
-	br
+	input(type='submit', class='submit')
+br

@@ -1,0 +1,10 @@
+div(ng-controller="InvestCtl")
+	h3 Invest
+
+	ul
+		li
+			button(ng-click="toNewInvestments()") New
+		li
+			button(ng-click="toCurrentBids()") Current Bids
+	div(ng-include src="getPage()")
+

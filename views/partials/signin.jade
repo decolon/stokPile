@@ -1,11 +1,11 @@
 h3 Sign In
-form(novalidate)
+form(action='/login', method='get')
 	label(for='email') Email: 
-	input(type='text', name='email', placeholder='Email Signup/In')
+	input(type='text', name='email')
 	br
 	label(for='password') Password: 
 	input(type='password', name='password')
 	br
-	input(type='submit')
+	input(type='submit', class='submit')
 br
 
