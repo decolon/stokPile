@@ -18,5 +18,14 @@ exports.login = function(req, res){
 
 exports.user = function(req, res){
 	res.render('loggedIn');
-}
+};
+
+exports.invest = function(req, res){
+	res.render('loggedIn');
+};
+
+exports.sell = function(req, res){
+	res.render('loggedIn');
+};
+
 

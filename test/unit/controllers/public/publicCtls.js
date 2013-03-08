@@ -1,7 +1,4 @@
-//Testing Stokpile controllers
-//
-//controllers located at public/js/controllers.js
-//
+
 
 //TESTING: Public Pages
 //----------------------------------------------------------------------
@@ -57,21 +54,5 @@ describe('Public Pages Controllers', function(){
 		});
 	});
 
-	//Tests for UserCtl
-	//---------------------------------------------------------------------------
-	
-	describe('UserCtl', function(){
-		var ctrl, params;
-		beforeEach(function(){
-			params = {
-				$scope: $scope
-			};
-			ctrl = $controller('UserCtl', params);
-		});
-
-		it('shoud have something', function(){
-			
-		});
-	});
-
 });
+

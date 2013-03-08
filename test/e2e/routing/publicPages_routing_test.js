@@ -1,6 +1,6 @@
 'use strict'
 
-describe('myApp', function(){
+describe('public pages', function(){
 	beforeEach(function(){
 		browser().navigateTo('/');
 	});
@@ -37,5 +37,24 @@ describe('myApp', function(){
 		expect(browser().window().path()).toBe('/user');
 		expect(element('h1:first').html()).toContain('USER HOME');
 	});
+});
+
+describe('logged in pages', function(){
+	beforeEach(function(){
+		browser().navigateTo('/user');
+	});
+
+	it('should navigate to user summary when the summary button is clicked', function(){
+		element('.userSummary').click();
+		expect(browser().window().path()).toBe('/user/summary');
+		expect(element('h1:first').html()).toContain('USER SUMMARY');
+	});
+
+	it('should navigate to user investments when the investments button is clicked', function(){
+		element('.userInvestments').click();
+		expect(browser().window().path()).toBe('/user/investments');
+		expect(element('h1:first').html()).toContain('USER INVESTMENTS');
+	});
 
 });
+

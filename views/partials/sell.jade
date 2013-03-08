@@ -1,0 +1,11 @@
+div(ng-controller="SellCtl")
+	h3 Invest
+
+	ul
+		li
+			button(ng-click="toNewOffers()") New
+		li
+			button(ng-click="toPastOffers()") Past Offers
+	div(ng-include src="getPage()")
+
+
