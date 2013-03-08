@@ -28,4 +28,7 @@ exports.sell = function(req, res){
 	res.render('loggedIn');
 };
 
+exports.logout = function(req, res){
+	res.redirect('index');
+};
 

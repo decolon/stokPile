@@ -55,11 +55,12 @@ app.get('/login', routes.login);
 app.get('/user', routes.user);
 app.get('/invest', routes.invest);
 app.get('/sell', routes.sell);
+app.get('/logout', routes.logout);
 
 app.get('/partials/:name', routes.partials);
 
 // redirect all others to the index (HTML5 history)
-//app.get('*', routes.index);
+app.get('*', routes.index);
 
 // Start server
 

@@ -1,4 +1,12 @@
-describe('User Controllers', function(){
+
+
+//TESTING: Public Pages
+//----------------------------------------------------------------------
+//Welcome Page
+//Signup Page
+//Signin Page
+
+describe('Public Pages Controllers', function(){
 
 	//Set up for all controllers
 	//---------------------------------------------------------------------------
@@ -11,16 +19,34 @@ describe('User Controllers', function(){
 		$controller = $injector.get('$controller');
 	}));
 	
-	//Tests for UserCtl
+	//Tests for SigninCtl
+	//---------------------------------------------------------------------------
+
+	describe('SigninCtl', function(){
+		var ctrl, params;
+		beforeEach(function(){
+			params = {
+				$scope: $scope,
+			};
+			ctrl = $controller('SigninCtl', params);
+		});
+
+		it('shoud have something', function(){
+			
+		});
+
+	});
+
+	//Tests for SignupCtl
 	//---------------------------------------------------------------------------
 	
-	describe('UserCtl', function(){
+	describe('SignupCtl', function(){
 		var ctrl, params;
 		beforeEach(function(){
 			params = {
 				$scope: $scope
 			};
-			ctrl = $controller('UserCtl', params);
+			ctrl = $controller('SignupCtl', params);
 		});
 
 		it('shoud have something', function(){
@@ -28,38 +54,5 @@ describe('User Controllers', function(){
 		});
 	});
 
-	//Tests for UserSummaryCtl
-	//---------------------------------------------------------------------------
-	
-	describe('UserSummaryCtl', function(){
-		var ctrl, params;
-		beforeEach(function(){
-			params = {
-				$scope: $scope
-			};
-			ctrl = $controller('UserSummaryCtl', params);
-		});
-
-		it('should exist', function(){
-		
-		});
-	});
-
-	//Tests for UserInvestmentCtl
-	//---------------------------------------------------------------------------
-	
-	describe('UserInvestmentCtl', function(){
-		var ctrl, params;
-		beforeEach(function(){
-			params = {
-				$scope: $scope
-			};
-			ctrl = $controller('UserInvestmentCtl', params);
-		});
-
-		it('should exist', function(){
-		
-		});
-	});
-
 });
+

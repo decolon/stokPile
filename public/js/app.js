@@ -9,6 +9,6 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives'])
     $routeProvider.when('/user', {templateUrl: 'partials/user', controller: UserCtl});
     $routeProvider.when('/invest', {templateUrl: 'partials/invest', controller: InvestCtl});
     $routeProvider.when('/sell', {templateUrl: 'partials/sell', controller: SellCtl});
-   // $routeProvider.otherwise({redirectTo: '/signup'});
+    $routeProvider.otherwise({redirectTo: '/signup'});
     $locationProvider.html5Mode(true);
   }]);

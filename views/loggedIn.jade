@@ -10,5 +10,9 @@ block body
 			a(href='invest') Invest
 		li
 			a(href='sell') Sell
+
+	form(action='/logout', method='get')
+		input(type='submit', value='Log out')
 	hr
+
 	div(ng-view)

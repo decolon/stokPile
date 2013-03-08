@@ -1,12 +1,4 @@
-
-
-//TESTING: Public Pages
-//----------------------------------------------------------------------
-//Welcome Page
-//Signup Page
-//Signin Page
-
-describe('Public Pages Controllers', function(){
+describe('Logged In Controllers', function(){
 
 	//Set up for all controllers
 	//---------------------------------------------------------------------------
@@ -19,34 +11,16 @@ describe('Public Pages Controllers', function(){
 		$controller = $injector.get('$controller');
 	}));
 	
-	//Tests for SignupCtl
-	//---------------------------------------------------------------------------
-
-	describe('SignupCtl', function(){
-		var ctrl, params;
-		beforeEach(function(){
-			params = {
-				$scope: $scope,
-			};
-			ctrl = $controller('SignupCtl', params);
-		});
-
-		it('shoud have something', function(){
-			
-		});
-
-	});
-
-	//Tests for SigninCtl
+	//Tests for UserCtl
 	//---------------------------------------------------------------------------
 	
-	describe('SignupCtl', function(){
+	describe('UserCtl', function(){
 		var ctrl, params;
 		beforeEach(function(){
 			params = {
 				$scope: $scope
 			};
-			ctrl = $controller('SigninCtl', params);
+			ctrl = $controller('UserCtl', params);
 		});
 
 		it('shoud have something', function(){
@@ -54,5 +28,38 @@ describe('Public Pages Controllers', function(){
 		});
 	});
 
-});
+	//Tests for SellCtl
+	//---------------------------------------------------------------------------
+	
+	describe('SellCtl', function(){
+		var ctrl, params;
+		beforeEach(function(){
+			params = {
+				$scope: $scope
+			};
+			ctrl = $controller('SellCtl', params);
+		});
 
+		it('should exist', function(){
+		
+		});
+	});
+
+	//Tests for InvestCtl
+	//---------------------------------------------------------------------------
+	
+	describe('InvestCtl', function(){
+		var ctrl, params;
+		beforeEach(function(){
+			params = {
+				$scope: $scope
+			};
+			ctrl = $controller('InvestCtl', params);
+		});
+
+		it('should exist', function(){
+		
+		});
+	});
+
+});
