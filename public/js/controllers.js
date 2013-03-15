@@ -1,12 +1,14 @@
-
-'use strict';
+'use strict'
 
 //SignupCtl
 //----------------------------------------------------------------------------
 
-function SignupCtl($scope) {
+function SignupCtl($scope, DatabaseService) {
+	var orm = require('singleton.js');
+	$scope.test = orm.models();
 }
-SignupCtl.$inject = ['$scope'];
+
+SignupCtl.$inject = ['$scope', 'DatabaseService'];
 
 //SigninCtl
 //---------------------------------------------------------------------------

@@ -11,8 +11,9 @@ block body
 		li
 			a(href='sell') Sell
 
-	form(action='/logout', method='get')
-		input(type='submit', value='Log out')
+		li
+			form(action='/logout', method='get')
+				input(type='submit', value='Log out')
 	hr
 
 	div(ng-view)

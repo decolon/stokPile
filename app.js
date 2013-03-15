@@ -3,13 +3,23 @@
  * Module dependencies.
  */
 
-var express = require('express'),
-  http = require('http'),
-  path = require('path'),
-  routes = require('./routes')
-
+var express = require('express');
+var  http = require('http');
+var  path = require('path');
 var app  = express();
 
+//Need to do it this way so I only start using the database after it has all loaded
+var routes;
+var AM;
+var afterDatabaseLoad = function(){
+	AM = require('./modules/account-manager');
+	routes = require('./routes');
+}
+
+
+//Sequelize
+//TODO change from root and change password
+require('./db/singleton.js').setup('./models','./db/models', 'stokpile', 'root', afterDatabaseLoad, 'rome8187');
 // Configuration
 app.configure(function() {
   app.set('port', process.env.PORT || 3000);
@@ -18,6 +28,8 @@ app.configure(function() {
   app.use(express.favicon());
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
+  app.use(express.cookieParser());
+  app.use(express.session({secret:'placeholder'}));
   app.use(express.methodOverride());
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(function(req, res, next) {
@@ -50,8 +62,11 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/', routes.index);
-app.get('/login', routes.login);
+app.get('/', routes.loggedInUserHome);
+
+app.post('/login', routes.manualLogin);
+app.post('/newAccount', routes.newAccount);
+
 app.get('/user', routes.user);
 app.get('/invest', routes.invest);
 app.get('/sell', routes.sell);
@@ -60,7 +75,7 @@ app.get('/logout', routes.logout);
 app.get('/partials/:name', routes.partials);
 
 // redirect all others to the index (HTML5 history)
-app.get('*', routes.index);
+app.get('*', routes.loggedInUserHome);
 
 // Start server
 

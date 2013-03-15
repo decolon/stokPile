@@ -1,2 +1,17 @@
 /* app css stylesheet */
 
+li{
+	display:inline;
+	margin: 1em;
+}
+
+form{
+	display:inline;
+}
+
+.vertical{
+	display:block;
+}
+
+
+
