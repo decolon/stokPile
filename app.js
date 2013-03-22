@@ -22,7 +22,7 @@ var afterDatabaseLoad = function(){
 //TODO change from root and change password
 //-----------------------------------------------------------------------
 require('./db/singleton.js').setup('./models','./db/models', 'stokpile', 'root', afterDatabaseLoad, '', {
-	host: DATABASE_URL,
+	host: process.env.DATABASE_URL,
 	protocol: null,
 	dialect: 'postgres'
 });
