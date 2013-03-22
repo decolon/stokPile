@@ -11,7 +11,6 @@ var app  = express();
 //------------------------------------------------------------------------------
 var routes;
 var AM;
-var api;
 var afterDatabaseLoad = function(){
 	AM = require('./modules/account-manager');
 	routes = require('./routes/index');
@@ -30,10 +29,7 @@ var afterDatabaseLoad = function(){
 //TODO: give the database a password
 //TODO: set up and use postgresql for eventual heroku deployment
 //-----------------------------------------------------------------------
-require('./db/singleton.js').setup('./models','./db/models', 'stokpile', 'root', afterDatabaseLoad, '', {
-	protocol: null,
-	dialect: 'mysql'
-});
+require('./db/singleton.js').setup('./models','./db/models', 'stokpile', 'root', afterDatabaseLoad, '');
 
 // Configuration
 // Much of this I got from sample applications.  
@@ -92,9 +88,6 @@ app.get('/logout', routes.logout);
 app.get('/user/:id', routes.loggedInUserHome);
 app.get('/invest/:id', routes.loggedInUserHome);
 app.get('/sell/:id', routes.loggedInUserHome);
-app.get('/partials/:name', routes.partials);
-app.get('*', routes.loggedInUserHome);
-
 app.get('/user/:id/investments', api.investments);
 app.get('/user/:id/investments/:name', api.findInvestment);
 app.get('/user/:id/summary', api.summary);
@@ -105,6 +98,11 @@ app.get('/invest/:name/products', api.findProduct);
 app.post('/product/new', api.newProduct);
 app.post('/bid/new', api.newBid);
 app.post('/offer/new', api.newOffer);
+
+app.get('/partials/:name', routes.partials);
+app.get('*', routes.loggedInUserHome);
+
+
 
 // Start server
 //----------------------------------------------------------------------------
