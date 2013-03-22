@@ -2,5 +2,13 @@ h4 Sell item Page
 ul
 	li(ng-repeat='(key, value) in itemData')
 		p {{key}}:  {{value}}
+	
+label(for='minAmount') Min Amount You Will Accept
+input(type='number', name='minAmount', id='minAmount', required) 
 
-button(ng-click='toNewOffer()') Sell
+label(for='numShares') How Many Shares To Sell?
+input(type='number', name='numShares', id='numShares', required) 
+br
+
+
+button(ng-click='offer(itemData.productId, itemData.numberShares)') Sell

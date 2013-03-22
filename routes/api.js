@@ -140,7 +140,7 @@ exports.findProduct = function(req, res){
 exports.findInvestment = function(req, res){
 	var username = req.params.id;
 	var productName = '%'+req.params.name+'%';
-	InvestmentModel.findAll({where: ["username = ? AND id LIKE ?", username, productName]}).success(function(result){
+	InvestmentModel.findAll({where: ["username = ? AND productId LIKE ?", username, productName]}).success(function(result){
 		if(result != undefined){
 			var array = [];
 			for(x in result){
@@ -169,6 +169,69 @@ exports.newProduct = function(req, res){
 		console.log(newData)
 		res.send(newData);
 	});
+}
+
+exports.newBid = function(req, res){
+	var newData = {};
+	newData.productId = req.body.productId;
+	newData.maxAmount = req.body.maxAmount;
+	newData.username = req.body.username;
+	newData.numberShares = req.body.numShares;
+	if(newData.numberShares < 0){
+		newData.numberShares *= -1;
+	}
+	newData.bidTime = req.body.bidTime;
+	newData.success = req.body.success;
+	BidModel.create(newData).success(function(){
+		console.log(newData)
+		res.send(newData);
+	});
+	var newInvestment = {};
+	newInvestment.username = req.body.username;
+	newInvestment.productId = req.body.productId;
+	newInvestment.bidTime = req.body.bidTime;
+	newInvestment.numberShares = req.body.numShares;
+	InvestmentModel.find({where:{username:newInvestment.username, productId:newInvestment.productId}}).success(function(investment){
+		if(investment == undefined){
+			InvestmentModel.create(newInvestment);
+		}else{
+			var original = Number(investment.numberShares);
+			var toAdd = Number(newData.numberShares);
+			var newTotal = original + toAdd;
+			investment.numberShares = newTotal;
+			investment.createdAt = '0000-00-00 00:00:00';
+			investment.save();
+		}
+	});
+}
+
+exports.newOffer = function(req, res){
+	var newData = {};
+	newData.productId = req.body.productId;
+	newData.minAmmount = req.body.minAmount;
+	newData.username = req.body.username;
+	newData.numberShares = req.body.numShares;
+	if(newData.numberShares < 0){
+		newData.numberShares = 1;
+	}
+	newData.offerTime = req.body.offerTime;
+	newData.success = req.body.success;
+	var sharesLeft = (req.body.curNumShares)-newData.numberShares;
+	if(sharesLeft < 1){
+		newData.numberShares = req.body.curNumShares;
+		OfferModel.create(newData);
+		InvestmentModel.find({where:{username:newData.username, productId:newData.productId}}).success(function(investment){
+			investment.destroy();	
+		});
+	}else{
+		OfferModel.create(newData);
+		InvestmentModel.find({where:{username:newData.username, productId:newData.productId}}).success(function(investment){
+			investment.numberShares = sharesLeft;
+			investment.createdAt = '0000-00-00 00:00:00';
+			investment.save();
+		});
+	}
+	res.send(newData);
 }
 
 

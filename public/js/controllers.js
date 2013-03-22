@@ -96,16 +96,16 @@ function InvestCtl($scope, $resource){
 				subPage = 'partials/investItemPage';
 			}else if(data.length > 1){
 				$scope.data = data;
-				subPage = 'partials/optionList';
+				subPage = 'partials/investOptionPage';
 			}else{
 				subPage = 'partials/newInvestment';			
 			}
 		});
 	};
-	$scope.toItemPage = function(productId){
+	$scope.toItemPage = function(id){
 		var data = $scope.data;
 		for(var i=0; i<data.length; i++){
-			if(data[i].productId == productId){
+			if(data[i].id == id){
 				$scope.itemData = data[i];
 			}
 		}
@@ -120,9 +120,21 @@ function InvestCtl($scope, $resource){
 		var newProduct = $resource('product/new');
 		var responce = newProduct.save({discovererId:$scope.loggedInUser(), name:name, description:description}, function(data){
 			$scope.itemData = data;
-			subPage = 'partials/investItemPage';
+			subPage = 'partials/newInvestment';
 		});
-	}
+	};
+	$scope.invest = function(productId){
+		var maxAmount = $('#maxAmount').val();
+		var numShares = $('#numShares').val();
+		var username = $scope.loggedInUser();
+		var bidTime = '2013-03-21 21:07:41';
+		var success = 0;
+		var newBid = $resource('bid/new');
+		var responce = newBid.save({maxAmount:maxAmount, numShares:numShares, username:username, productId:productId, bidTime:bidTime, success:success}, function(data){
+			$scope.bidData = data;
+			subPage = 'partials/justBidPage';
+		});
+	};
 	$scope.getPage = function(){
 		return subPage;
 	};
@@ -162,7 +174,7 @@ function SellCtl($scope, $resource){
 				subPage = 'partials/sellItemPage';
 			}else if(data.length > 1){
 				$scope.data = data;
-				subPage = 'partials/optionList';
+				subPage = 'partials/sellOptionPage';
 			}else{
 				subPage = 'partials/newOffer';			
 			}
@@ -177,6 +189,18 @@ function SellCtl($scope, $resource){
 		}
 		subPage = 'partials/sellItemPage';
 	};
+	$scope.offer = function(productId, curNumShares){
+		var minAmount = $('#minAmount').val();
+		var numShares = $('#numShares').val();
+		var username = $scope.loggedInUser();
+		var offerTime = '2013-03-21 21:07:41';
+		var success = 0;
+		var newOffer = $resource('offer/new');
+		var responce = newOffer.save({curNumShares:curNumShares, minAmount:minAmount, numShares:numShares, username:username, productId:productId, offerTime:offerTime, success:success}, function(data){
+			$scope.bidData = data;
+			subPage = 'partials/justBidPage';
+		});
+	}
 	$scope.getPage = function(){
 		return subPage;
 	};

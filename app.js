@@ -87,6 +87,8 @@ app.get('/invest/:id/currentBids', api.currentBids);
 app.get('/sell/:id/pastOffers', api.pastOffers);
 app.get('/invest/:name/products', api.findProduct);
 app.post('/product/new', api.newProduct);
+app.post('/bid/new', api.newBid);
+app.post('/offer/new', api.newOffer);
 
 
 app.get('/partials/:name', routes.partials);

@@ -2,4 +2,12 @@ ul
 	li(ng-repeat='(key, value) in itemData')
 		p {{key}}: {{value}}
 
-button(ng-click='toNewInvestment()') Invest
+label(for='maxAmount') Max Amount You Will Pay
+input(type='number', name='maxAmount', id='maxAmount', required) 
+
+label(for='numShares') How Many Shares To Buy?
+input(type='number', name='numShares', id='numShares', required) 
+br
+
+
+button(ng-click='invest(itemData.id)') Invest
