@@ -23,7 +23,7 @@ var afterDatabaseLoad = function(){
 //-----------------------------------------------------------------------
 require('./db/singleton.js').setup('./models','./db/models', 'stokpile', 'root', afterDatabaseLoad, '', {
 	protocol: null,
-	dialect: 'mysql'
+	dialect: 'postgres'
 });
 
 // Configuration
