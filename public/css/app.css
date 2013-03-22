@@ -1,5 +1,6 @@
 /* app css stylesheet */
-
+/*Right now all it does is make the lists display correctly
+ *  TODO: WORK WITH THE DESIGN OF THE SITE*/
 li{
 	display:inline;
 	margin: 1em;

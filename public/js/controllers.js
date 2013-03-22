@@ -3,15 +3,12 @@
 //SignupCtl
 //----------------------------------------------------------------------------
 function SignupCtl($scope, DatabaseService) {
-	var orm = require('singleton.js');
-	$scope.test = orm.models();
 }
 SignupCtl.$inject = ['$scope', 'DatabaseService'];
 
 //SigninCtl
 //---------------------------------------------------------------------------
 function SigninCtl($scope){
-	
 }
 SigninCtl.$inject = ['$scope'];
 
@@ -19,10 +16,16 @@ SigninCtl.$inject = ['$scope'];
 
 
 //LoggedInCtl
+//--------------------------
+//change all <a> elements to get the correct user and greet user
+//
+//It does this by first getting the username.  Then it uses jquery to 
+//update all the <a> elements by appending the username to the href.  
+//
+//TODO: I want the username second, not last (/dcolon/user) but couldn't get this to work for some reason
 //---------------------------------------------------------------------------
 function LoggedInCtl($scope, $routeParams){
 
-	//change all a elements to get the correct user and greet user
 	var updated = false;
 	$scope.loggedInUser = function(){
 		if(!updated){
@@ -59,15 +62,13 @@ function UserCtl($scope){
 	$scope.getPage = function(){
 		return subPage;
 	};
-
-	//User Main
-	//-------------------------------------------
-	
 	
 }
 UserCtl.$inject = ['$scope'];
 
 //InvestCtl
+//TODO: figure out how to more the controllers for the nested ng-vies out of the
+//parent controller
 //---------------------------------------------------------------------------
 function InvestCtl($scope, $resource){
 
@@ -81,8 +82,13 @@ function InvestCtl($scope, $resource){
 		subPage = 'partials/currentBids';
 	};
 	//Deals with rendering the page after searching.
-	//TODO: make this nicer 
-	//TODO DECOMPOSE
+	//
+	//If the search returns
+	//------------------------------------------------------------
+	//One product -> that products invest page
+	//More than one product -> List view page
+	//No products -> stays on the same page
+	//
 	//TODO: dont ajax every time the page changes
 	$scope.productsSearch = function(){
 		var text = $('#productSearch').val();
@@ -102,6 +108,7 @@ function InvestCtl($scope, $resource){
 			}
 		});
 	};
+	//Renders the page where the investment takes place
 	$scope.toItemPage = function(id){
 		var data = $scope.data;
 		for(var i=0; i<data.length; i++){
@@ -114,6 +121,8 @@ function InvestCtl($scope, $resource){
 	$scope.toAddItem = function(){
 		subPage = 'partials/addItemPage';
 	};
+	//Takes care of adding an item
+	//After the item is added it returns to the newInvestment page
 	$scope.addItem = function(){
 		var name = $('#name').val();
 		var description = $('#description').val();
@@ -123,6 +132,8 @@ function InvestCtl($scope, $resource){
 			subPage = 'partials/newInvestment';
 		});
 	};
+	//Takes care of Investing
+	//TODO make investments need a user to be selling and make it affect the investors liquid assets
 	$scope.invest = function(productId){
 		var maxAmount = $('#maxAmount').val();
 		var numShares = $('#numShares').val();
@@ -138,14 +149,11 @@ function InvestCtl($scope, $resource){
 	$scope.getPage = function(){
 		return subPage;
 	};
-
-	//Invest Main
-	//----------------------------------
-
 }
 InvestCtl.$inject = ['$scope', '$resource'];
 
 //SellCtl
+//TODO combine as much code as possible with InvestmentCtl
 //---------------------------------------------------------------------------
 function SellCtl($scope, $resource){
 
@@ -159,9 +167,15 @@ function SellCtl($scope, $resource){
 		subPage = 'partials/pastOffers';
 	};
 	//Deals with rendering the page after searching.
-	//TODO: make this nicer 
-	//TODO DECOMPOSE
+	//
+	//If the search returns
+	//------------------------------------------------------------
+	//One investment -> that investments page
+	//More than one investment -> List view page
+	//No investments -> stays on the same page
+	//
 	//TODO: dont ajax every time the page changes
+	//TODO somehow combine with productSearch in the InvestmentCtl
 	$scope.investmentsSearch = function(){
 		var text = $('#investmentsSearch').val();
 		if(text == ''){
@@ -180,6 +194,7 @@ function SellCtl($scope, $resource){
 			}
 		});
 	};
+	//Renders the page where sales are made.
 	$scope.toItemPage = function(productId){
 		var data = $scope.data;
 		for(var i=0; i<data.length; i++){
@@ -189,6 +204,7 @@ function SellCtl($scope, $resource){
 		}
 		subPage = 'partials/sellItemPage';
 	};
+	//Takes care of making the new offer and communicating with the db
 	$scope.offer = function(productId, curNumShares){
 		var minAmount = $('#minAmount').val();
 		var numShares = $('#numShares').val();
@@ -204,10 +220,6 @@ function SellCtl($scope, $resource){
 	$scope.getPage = function(){
 		return subPage;
 	};
-
-	//Sell Main
-	//------------------------------------------
-	
 }
 SellCtl.$inject = ['$scope', '$resource'];
 
@@ -216,7 +228,6 @@ SellCtl.$inject = ['$scope', '$resource'];
 //This controller populates the user investment page with all the investments
 //the user currently has.  It uses angular $resource to asynchronously talk with
 //the server
-//
 //------------------------------------------------------------------------------
 function UserInvestmentCtl($scope, $resource){
 	var investments = $resource('/user/:id/investments');

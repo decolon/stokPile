@@ -8,7 +8,7 @@ var Seq = require('sequelize');
 //
 //username: the username of the person placing the Bid
 //productid: the productId of the product being bid on
-//time: the time the bid was places
+//bidTime: the time the bid was places
 //maxAmount: The bidders max price, will be used by the bidding algorithm
 //numShares: the number of shares the user is trying to buy
 //success: -1 if no, 0 for ongoing, 1 for yes
@@ -20,7 +20,7 @@ var Seq = require('sequelize');
 //--------
 //freezeTableName stops sequalize from changing the table names to plurals
 //
-//TODO figure out how to do indexing and all that CS 144 stuff
+//TODO figure out how to set primary keys, table joins, and indexing in sequalize
 //----------------------------------------------------------------------------
 module.exports = {
 	model:{

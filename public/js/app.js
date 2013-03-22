@@ -2,6 +2,7 @@
 
 
 // Declare app level module which depends on filters, and services
+// TODO: find out how to do more powerful nested ng-views with angular (agular-ui states??????)
 angular.module('myApp', ['ngResource','myApp.filters', 'myApp.services', 'myApp.directives']).
   config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
     $routeProvider.

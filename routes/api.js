@@ -74,7 +74,10 @@ exports.products = function(req, res){
 	});
 }
 
-//
+//currentBids
+//-----------------
+//Responds to an AJAX call for all of a users current bids
+//----------------------------------------------------------------------------------
 exports.currentBids = function(req, res){
 	var username = req.params.id;
 	BidModel.findAll({where:{username:username}}).success(function(result){
@@ -94,6 +97,12 @@ exports.currentBids = function(req, res){
 	});
 }
 
+
+
+//pastOffers
+//-----------------
+//Responds to an AJAX call for all of a users past offers
+//----------------------------------------------------------------------------------
 exports.pastOffers = function(req, res){
 	var username = req.params.id;
 	OfferModel.findAll({where:{username:username}}).success(function(result){
@@ -114,6 +123,14 @@ exports.pastOffers = function(req, res){
 }
 
 
+
+//findProduct
+//-----------------
+//Takes a product name and find all products that can match that name
+//
+//example: if the user types 'c' into the search field, any product with c
+//in its name will be returned
+//----------------------------------------------------------------------------------
 exports.findProduct = function(req, res){
 	var productName = req.params.name;
 	productName = '%'+productName+'%';
@@ -137,6 +154,14 @@ exports.findProduct = function(req, res){
 }
 
 
+
+//findInvestment
+//-----------------
+//Takes a productId and a username and finds all investments that can match that productId
+//
+//example: if the user types '1' into the search field, any investment with 1
+//in its productId and that the user in invested in, will be returned
+//----------------------------------------------------------------------------------
 exports.findInvestment = function(req, res){
 	var username = req.params.id;
 	var productName = '%'+req.params.name+'%';
@@ -156,6 +181,10 @@ exports.findInvestment = function(req, res){
 
 }
 
+//newProduct
+//--------------------
+//Adds a new product to the database
+//----------------------------------------------------------------------
 exports.newProduct = function(req, res){
 	var newData = {};
 	newData.discovererId = req.body.discovererId;
@@ -171,6 +200,16 @@ exports.newProduct = function(req, res){
 	});
 }
 
+
+//newBid
+//--------------------
+//Adds a new bid to the database
+//It also updates the investments of the User placing the bid
+//
+//TODO dont make it assume the bid goes through
+//TODO make it need to interact with other users to buy the stock
+//TODO make it affect the stokpile world at large (stock price, shares left, etc)
+//----------------------------------------------------------------------
 exports.newBid = function(req, res){
 	var newData = {};
 	newData.productId = req.body.productId;
@@ -205,6 +244,17 @@ exports.newBid = function(req, res){
 	});
 }
 
+
+
+//newOffer
+//--------------------
+//Adds a new offer to the database
+//It also updates the investments of the User placing the bid
+//
+//TODO dont make it assume the offer goes through
+//TODO make it need to interact with other users to sell the stock
+//TODO make it affect the stokpile world at large (stock price, shares left, etc)
+//----------------------------------------------------------------------
 exports.newOffer = function(req, res){
 	var newData = {};
 	newData.productId = req.body.productId;

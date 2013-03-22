@@ -57,7 +57,6 @@ var singleton = function singleton(){
 	//test
 	//--------------
 	//This is purely to make sure I have a valid handle to the orm
-	//TODO get rid of this
 	//----------------------------------------------------------------------------
 	this.test = function(){
 		return "works";
@@ -76,7 +75,7 @@ var singleton = function singleton(){
 	//
 	//the commented out code is used for debugging
 	//
-	//TODO understand the second half more, I have not used relationships yet
+	//TODO understand the second half more, I have not used relationships yet but need to
 	//---------------------------------------------------------------------------
 	function init(relativePath, rootPath){
 		filesystem.readdirSync(rootPath).forEach(function(name){
@@ -107,7 +106,7 @@ var singleton = function singleton(){
 singleton.instance = null;
 
 //NOT REALLY SURE WHEN THIS SHOULD BE USED
-//because i dont see where get instance is ever called besides above
+//because I don't see where get instance is ever called besides above
 //TODO figure this out too
 singleton.getInstance = function(){
 	if(this.instance === null){

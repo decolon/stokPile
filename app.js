@@ -1,4 +1,3 @@
-
 //Module dependencies
 //----------------------------------------------------------------------------
 var express = require('express');
@@ -12,6 +11,7 @@ var app  = express();
 //------------------------------------------------------------------------------
 var routes;
 var AM;
+var api;
 var afterDatabaseLoad = function(){
 	AM = require('./modules/account-manager');
 	routes = require('./routes/index');
@@ -19,16 +19,25 @@ var afterDatabaseLoad = function(){
 }
 
 //Sequelize
-//TODO change from root and change password
+//------------
+//Initializes the sequalize database.  The database singleton file is
+//found in ./db and the model files that the singleton loads are found in
+//./db/models
+//
+//I set up the singleton here and then require it in all subsequent 
+//files that need access to the database
+//
+//TODO: give the database a password
+//TODO: set up and use postgresql for eventual heroku deployment
 //-----------------------------------------------------------------------
 require('./db/singleton.js').setup('./models','./db/models', 'stokpile', 'root', afterDatabaseLoad, '', {
-	host: process.env.DATABASE_URL,
 	protocol: null,
-	dialect: 'postgres'
+	dialect: 'mysql'
 });
 
 // Configuration
-// Much of this I got from sample applications.  I don't understand everything
+// Much of this I got from sample applications.  
+// I understand most, but not all.  
 // TODO understand this code
 // -----------------------------------------------------------------------
 app.configure(function() {
@@ -72,16 +81,19 @@ app.configure('production', function(){
 });
 
 // Routes
+// ----------
+// all routes functions are used for navigation and are found in routes/index.js
+// all api functions are used for manipulating data and are found in routes/api.js
 // ---------------------------------------------------------------------------
 app.get('/', routes.autoLogin);
-
 app.post('/login', routes.manualLogin);
 app.post('/newAccount', routes.newAccount);
-
 app.get('/logout', routes.logout);
 app.get('/user/:id', routes.loggedInUserHome);
 app.get('/invest/:id', routes.loggedInUserHome);
 app.get('/sell/:id', routes.loggedInUserHome);
+app.get('/partials/:name', routes.partials);
+app.get('*', routes.loggedInUserHome);
 
 app.get('/user/:id/investments', api.investments);
 app.get('/user/:id/investments/:name', api.findInvestment);
@@ -93,10 +105,6 @@ app.get('/invest/:name/products', api.findProduct);
 app.post('/product/new', api.newProduct);
 app.post('/bid/new', api.newBid);
 app.post('/offer/new', api.newOffer);
-
-
-app.get('/partials/:name', routes.partials);
-app.get('*', routes.loggedInUserHome);
 
 // Start server
 //----------------------------------------------------------------------------

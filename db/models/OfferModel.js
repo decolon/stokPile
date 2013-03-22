@@ -20,7 +20,7 @@ var Seq = require('sequelize');
 //--------
 //freezeTableName stops sequalize from changing the table names to plurals
 //
-//TODO figure out how to do indexing and all that CS 144 stuff
+//TODO figure out how to set primary keys, table joins, and indexing in sequalizek
 //----------------------------------------------------------------------------
 module.exports = {
 	model:{

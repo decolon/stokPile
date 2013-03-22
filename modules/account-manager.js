@@ -82,6 +82,8 @@ exports.addNewAccount = function(newData, callback){
 				}else{
 					Users.create(newData);
 					callback(null);
+					//TODO: put back the hashing code when out of dev mode
+					//-----------------------------------------------------------
 //					saltAndHash(newData.password, function(hash){
 //						newData.password = hash;
 //						Users.create(newData);
