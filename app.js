@@ -21,7 +21,10 @@ var afterDatabaseLoad = function(){
 //Sequelize
 //TODO change from root and change password
 //-----------------------------------------------------------------------
-require('./db/singleton.js').setup('./models','./db/models', 'stokpile', 'root', afterDatabaseLoad, '');
+require('./db/singleton.js').setup('./models','./db/models', 'stokpile', 'root', afterDatabaseLoad, '', {
+	protocol: null,
+	dialect: 'mysql'
+});
 
 // Configuration
 // Much of this I got from sample applications.  I don't understand everything
