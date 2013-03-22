@@ -1,10 +1,15 @@
-h3 NEW INVESTMENT
+div(ng-controller='NewInvestmentCtl')
+	h3 NEW INVESTMENT
 
-p new worth 100
-p liquid assets 10
+	p liquid assets {{data.liquidAssets}}
 
-input(type='text', placeholder='invest in what?')
-button(ng-click='toOptionList()') Search
-br
-br
-button(ng-click='toAddItem()') Add Item
+	input(type='text', id='productSearch', ng-model='search', placeholder='invest in what?')
+	button(ng-click='productsSearch()') Search
+	br
+	br
+	button(ng-click='toAddItem()') Add Item
+
+	ul
+		li(ng-repeat='x in products')
+			p {{x.productId}}
+

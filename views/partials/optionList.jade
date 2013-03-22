@@ -1,11 +1,8 @@
 h3 option list
-
-ul
-	li 
-		button(class='vertical', ng-click='toItemPage()') Item Sell
-	li 
-		button(class='vertical', ng-click='toItemPage()') Item Sell
-	li 
-		button(class='vertical', ng-click='toItemPage()') Item Sell
-	li 
-		button(class='vertical', ng-click='toItemPage()') Item Sell
+	ul
+		li(ng-repeat='item in data')
+			button(ng-click='toItemPage(item.productId)') Go To
+			ul
+				li(ng-repeat='(key, value) in item')
+					p {{key}}: {{value}}
+			

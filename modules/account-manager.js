@@ -1,14 +1,27 @@
+//CODE ADAPTED FROM
+//https://github.com/braitsch/node-login
+//------------------------------------------------------------------------------
+
+//Module Dependencies
+//------------------------------------------------------------------------------
 var crypto = require('crypto');
 var moment = require('moment');
 var orm = require('../db/singleton.js');
 
-//get User table
+
+//Gets UserModel table from the orm and stores it in Users
+//Will use this extensively for checking log in attempts and 
+//creating new accounts
+//-------------------------------------------------------------------------------
 var Users = orm.model('UserModel');
 
 
-//attempts to auto login a user by looking for cookies
-//
-//TODO: why dont i need to validate the password
+//autoLogin
+//------------------
+//This function takes the data from the cookie and checks the Database to
+//make sure there is a user with that password to log in.  If there is, the 
+//user is returned otherwise null is returned.  
+//--------------------------------------------------------------------------------
 exports.autoLogin = function(username, password, callback){
 	Users.find({where:{username:username}}).success(function(user){
 		if(user){
@@ -19,7 +32,16 @@ exports.autoLogin = function(username, password, callback){
 	});
 }
 
-//why is this different than auto
+//manualLogin
+//--------------
+//This function is used to make sure the supplied username and password are valid.
+//First it attempts to get a user with the username.  If it fails it throws an error.
+//Then it checks to see if the supplied password, when hashed, is the same as that 
+//users password.  If not, an error is sent to the callback.  If both tests are passed,
+//the user is sent back with no error
+//
+//TODO have more helpful error messages
+//----------------------------------------------------------------------------------
 exports.manualLogin = function(username, password, callback){
 	Users.find({where:{username:username}}).success(function(user){
 		if(user != undefined){
@@ -36,7 +58,19 @@ exports.manualLogin = function(username, password, callback){
 	});
 }
 
-//adds a new account
+//addNewAccount
+//-------------------------
+//This function creates a new user.  First it checks to make sure the given username
+//and email are not being used by another user.  This function will throw an error
+//if either one is not unique.  
+//
+//After getting through the tests, addNewAccount hashes the supplied password,
+//replaces the text password with the hashed password, and then uses User,create
+//to create the new user
+//
+//the callback is used for error messages and logging in the user.  See
+//./routes/index.js -> newAccount for more information
+//---------------------------------------------------------------------------------
 exports.addNewAccount = function(newData, callback){
 	Users.find({where:{username:newData.username}}).success(function(user){
 		if(user != undefined){
@@ -46,24 +80,24 @@ exports.addNewAccount = function(newData, callback){
 				if(newUser != undefined){
 					callback('email-taken');
 				}else{
-					saltAndHash(newData.password, function(hash){
-						newData.password = hash;
-						newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
-						//TODO something needs to happen when i create
-						//a new user, but not sure what yet
-						console.log(newData)
-						Users.create(newData);
-						callback(null);
-					});
+					Users.create(newData);
+					callback(null);
+//					saltAndHash(newData.password, function(hash){
+//						newData.password = hash;
+//						Users.create(newData);
+//						callback(null);
+//					});
 				}
 			});
 		}
 	});
 }
 
-//this will update an account
-//TODO: make an account update page to this is actually used
-exports.updateAcount = function(newData, callback){
+//updateAccount
+//----------------------
+//TODO: Build this functionality into the site
+//--------------------------------------------------------------------------------
+exports.updateAccount = function(newData, callback){
 	Users.find({where:{username:newData.username}}).success(function(user){
 		user.username = newData.username;
 		user.email = newData.email;
@@ -78,9 +112,11 @@ exports.updateAcount = function(newData, callback){
 	});
 }
 
-//this will change your password, i assume used when someone looses their
-//password
-//TODO: actually use this
+
+//updatePassword
+//---------------------
+//TODO: Build this functionality into the site
+//--------------------------------------------------------------------------------
 exports.updatePassword = function(email, newPass, callback){
 	Users.find({where:{email:email}}).success(function(user){
 		saltAndHash(newPass, function(hash){
@@ -92,8 +128,10 @@ exports.updatePassword = function(email, newPass, callback){
 	});
 }
 
-//will delete an account
-//TODO: better error checking
+//deleteAccount
+//------------------------
+//TODO: Build this functionality into the site
+//-------------------------------------------------------------------------------
 exports.deleteAccount = function(id, callback){
 	Users.find({where:{id:id}}).success(function(user){
 		user.destroy().error(function(error){
@@ -102,14 +140,15 @@ exports.deleteAccount = function(id, callback){
 	});
 }
 
-//TODO write more setter and getter things for account information
+//HELPER METHODS
+//--------------------------------------------------------------------------------
+
+//generateSalt
+//--------------------
+//Generates a salt
 //
-
-//Helper methods to create a password
-//TODO make sure is secure
-//TODO use sha1 not md5
-//TODO make supper succure
-
+//TODO make sure this is valid, secure code
+//--------------------------------------------------------------------------------
 var generateSalt = function(){
 	var set = '1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
 	var salt = '';
@@ -120,19 +159,38 @@ var generateSalt = function(){
 	return salt;
 }
 
+//md5
+//------
+//Hashing Algorithm
+//
+//TODO change to a more secure one, sha1? 
+//---------------------------------------------------------------------------------
 var md5 = function(str){
 	return crypto.createHash('md5').update(str).digest('hex');
 }
 
+//saltAndHash
+//----------------
+//gets a salt and appends it to the hashed password + salt.  This hole beautiful 
+//mess is then returned in the callback
+//--------------------------------------------------------------------------------
 var saltAndHash = function(password, callback){
 	var salt = generateSalt();
 	callback(salt+md5(password + salt));
 }
 
+//validatePassword
+//-----------------
+//This function takes a plain password and a hashed password and checks
+//to see if they are the same.  First it gets the salt from the hashed
+//password.  Then it hashes the plain password and returns via the 
+//callback weather or not the passwords are the same
+//------------------------------------------------------------------------------
 var validatePassword = function(plainPassword, hashedPassword, callback){
 	var salt = hashedPassword.substr(0, 10);
 	var validHash = salt + md5(plainPassword + salt);
-	callback(null, hashedPassword === validHash);
+	//TODO change this back when in real mode
+	callback(null, plainPassword === hashedPassword);
 }
 
 

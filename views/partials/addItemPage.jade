@@ -1,5 +1,10 @@
 h4 add item page
 
-input(type='text', placeholder='whats the new item')
-
-button(ng-click='toItemPage()') Add Item
+label(for='name') Item Name
+input(type='text', id='name', placeholder='whats the new items name', required)
+br
+label(for='description') Description
+input(type='text', id='description', placeholder='description', required)
+br
+br
+button(ng-click='addItem()') Add Item

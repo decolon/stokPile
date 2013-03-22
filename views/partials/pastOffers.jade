@@ -1,1 +1,8 @@
-h1 PAST OFFERS
+div(ng-controller='PastOffersCtl')
+	h3 Past Offers
+	
+	ul
+		li(ng-repeat='offers in pastOffers')
+			ul
+				li(ng-repeat='(key, value) in offers')
+					p {{key}}: {{value}}

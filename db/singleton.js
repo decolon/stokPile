@@ -1,16 +1,29 @@
 //Need filesystem to access the model files
+//--------------------------------------------------------------------------------
 var filesystem = require('fs');
 
 //Global Variables
+//use these both in setup and in serving the loaded models
+//-------------------------------------------------------------------------------
 var models = {};
 var relationships = {};
 
 //The object holding all the models
+//------------------------------------------------------------------------------
 var singleton = function singleton(){
 	var Sequelize = require("sequelize");
 	var sequelize = null;
 
-	//Sets up the object
+	//setup
+	//----------------------
+	//This function sets up the sequalize object.  Depending on how many parameters
+	//are given, it calls different sequalize constructors. Then this function
+	//calls init to do most of the heavy lifting for setup.  Finally it calls the 
+	//callback function. 
+	//
+	//The callback function is only used in ./app.js to load some modules which need
+	//the database to have finished setting up
+	//------------------------------------------------------------------------------
 	this.setup = function(relativePath, rootPath, database, username, callback, password, obj){
 		modelsRelativePath = relativePath;
 		modelsRootPath = rootPath;	
@@ -28,24 +41,44 @@ var singleton = function singleton(){
 		callback();
 	}
 
-	//Get the model by name
+	//model
+	//--------------
+	//This function is used to get a specific model (aka table) from the database
+	//
+	//example
+	//--------
+	//var User = orm.model('UserModel');
+	//
+	//-----------------------------------------------------------------------------
 	this.model = function(name){
 		return models[name];
 	}
 
+	//test
+	//--------------
+	//This is purely to make sure I have a valid handle to the orm
+	//TODO get rid of this
+	//----------------------------------------------------------------------------
 	this.test = function(){
 		return "works";
 	}
 
-	//returns the stuff from require(sequelize)
-	this.Seq = function(){
-		return Sequelize;
-	}
-
-	//This function is the one that looks in the model files
-	//and puts them all into the sigleton
+	//init
+	//----------------
+	//This function is responsible for loading all the model files found in
+	//the 'models' directory into the database.  First it uses filesystem
+	//to get all the files, and for each file it formats it a bit before 
+	//calling sequalize.define to create the new table.  After the table
+	//is created, it loads the new table object into the models object
+	//and loads any relationships into the relationships object
+	//
+	//The second half initializes all the relationships between object
+	//
+	//the commented out code is used for debugging
+	//
+	//TODO understand the second half more, I have not used relationships yet
+	//---------------------------------------------------------------------------
 	function init(relativePath, rootPath){
-		//Class
 		filesystem.readdirSync(rootPath).forEach(function(name){
 			var object = require(relativePath + "/" + name);
 			var options = object.options || {}
@@ -53,7 +86,6 @@ var singleton = function singleton(){
 			models[modelName] = sequelize.define(modelName, object.model, options);
 			relationships[modelName] = object.relations;
 		});
-		//relations
 //		console.log(models)
 		for(var name in relationships){
 			var relation = relationships[name];
@@ -66,6 +98,7 @@ var singleton = function singleton(){
 		sequelize.sync();
 	}
 	//NOT SURE WHEN THIS WOULD COME UP
+	//TODO figure what this is all about
 	if(singleton.caller != singleton.getInstance){
 		throw new Error("This object cannot be instanciated");
 	}
@@ -75,6 +108,7 @@ singleton.instance = null;
 
 //NOT REALLY SURE WHEN THIS SHOULD BE USED
 //because i dont see where get instance is ever called besides above
+//TODO figure this out too
 singleton.getInstance = function(){
 	if(this.instance === null){
 		this.instance = new singleton();
@@ -83,5 +117,6 @@ singleton.getInstance = function(){
 }
 
 //Same here WHY ARE WE EXPORTING THIS
+//TODO and this too
 module.exports = singleton.getInstance();
 

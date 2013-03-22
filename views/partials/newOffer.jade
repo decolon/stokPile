@@ -1,14 +1,12 @@
-h1 NEW OFFER
+div(ng-controller='NewOfferCtl')
+	h3 NEW OFFER
 
-input(type='text', placeholder='What would you like to sell')
-button(ng-click='toSellOptionList()') Search
+	input(type='text', id='investmentsSearch', placeholder='What would you like to sell')
+	button(ng-click='investmentsSearch()') Search
 
-ul
-	li
-		p thing1
-	li
-		p thing2
-	li
-		p thing3
-	li
-		p thing4
+	ul
+		li(ng-repeat='investment in canSell')
+			ul
+				li(ng-repeat='(key, value) in investment')
+					p {{key}}: {{value}}
+

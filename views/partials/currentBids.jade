@@ -1,1 +1,8 @@
-h1 CURRENT BIDS
+div(ng-controller='CurrentBidsCtl')
+	h3 Current Bids
+	ul
+		li(ng-repeat='bid in currentBids')
+			ul
+				li(ng-repeat='(key, value) in bid')
+					p {{key}}: {{value}}
+					

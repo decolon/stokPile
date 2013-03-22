@@ -1,10 +1,10 @@
 h3 Sign In
 form(action='/login', method='post')
 	label(for='username') Username: 
-	input(type='text', name='username')
+	input(type='text', name='username', value='dcolon', required, maxlength='20')
 	br
 	label(for='password') Password: 
-	input(type='password', name='password')
+	input(type='password', name='password', value='password', required, maxlength='30')
 	br
 	input(type='submit', class='submit')
 br

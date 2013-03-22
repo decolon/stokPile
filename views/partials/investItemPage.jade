@@ -1,3 +1,5 @@
-h4 invest Item page
+ul
+	li(ng-repeat='(key, value) in itemData')
+		p {{key}}: {{value}}
 
 button(ng-click='toNewInvestment()') Invest

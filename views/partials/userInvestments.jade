@@ -1,1 +1,12 @@
-h1 USER INVESTMENTS
+div(ng-controller='UserInvestmentCtl')
+	h1 USER INVESTMENTS
+
+	ul
+		li(ng-repeat="investment in data")
+			ul
+				li(ng-repeat='(key, value) in investment')
+					p {{key}}: {{value}}
+
+
+
+

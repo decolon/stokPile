@@ -1,1 +1,6 @@
-h1 Summary
+div(ng-controller='UserSummaryCtl')
+	h3 User Summary	
+	
+	ul
+		li(ng-repeat='(key, value) in data')
+			p {{key}}: {{value}}
